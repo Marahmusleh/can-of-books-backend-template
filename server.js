@@ -5,27 +5,27 @@ require('dotenv').config();
 const cors = require('cors');
 //---save all method inside express
 const app = express();
-const jwt = require('jsonwebtoken');
-const jwksClient = require('jwks-rsa'); // we are going to use this package to connect to Auth0
+//const jwt = require('jsonwebtoken');
+//const jwksClient = require('jwks-rsa'); // we are going to use this package to connect to Auth0
 //-----
 const PORT = process.env.PORT;
 const MONGO_DB_URL=process.env.MONGO_DB_URL;
-const JWKSURI = process.env.JWKSURI;
+//const JWKSURI = process.env.JWKSURI;
 
 
 ///-------
 const mongoose = require("mongoose");
 
-const client = jwksClient({
+/*const client = jwksClient({
   jwksUri: JWKSURI
-});
+});*/
 
 // to recieve all req
 app.use(cors());
 
 
 
-function getKey(header, callback){
+/*function getKey(header, callback){
   client.getSigningKey(header.kid, function(err, key) {
     var signingKey = key.publicKey || key.rsaPublicKey;
     callback(null, signingKey);
@@ -43,7 +43,7 @@ jwt.verify(token, getKey, {}, (error, user) =>{ // pass it to the auth to check 
   response.json(user);//send user information in the state from auth
 });
 });
-
+*/
  
   // TODO: 
   // STEP 1: get the jwt from the headers
@@ -63,7 +63,7 @@ jwt.verify(token, getKey, {}, (error, user) =>{ // pass it to the auth to check 
 
 
   const bookSchema=new mongoose.Schema({
-    title:{typy:String},
+    title:String,
     description: {typy:String},
     status: {typy:String}
   });
@@ -110,16 +110,19 @@ function seedUsersCollection() {
  
 
  app.get('/books', seadBooksCollections);
+
  function seadBooksCollections(req,res){
   let requestedEmail = req.query.email;
    userModel.find({email:requestedEmail},function(err,user){
      if(err){ console.log('did not work')
     }
     else{
-      res.send(user[0],books)
+      res.send(user[0].books)
     }
 
    })
  }
- 
+ app.get('/', (req, res) => {
+  res.send('hello useless home page');
+});
 
