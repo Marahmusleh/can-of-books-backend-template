@@ -14,7 +14,7 @@ const {seedUserData} = require('./models/user.model');
 const getBooks = require('./controller/book.controller');
 app.use(cors());
 
-mongoose.connect(`${MONGO_DB_URL}/books`, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(`${MONGO_DB_URL}books`, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 const client = jwksClient({

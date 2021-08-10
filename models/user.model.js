@@ -6,7 +6,7 @@ const bookSchema = require('./book.model');
 
 
 const userSchema = new mongoose.Schema({
-    email: { type: String },
+    ownerEmail: { type: String },
     books: [bookSchema]
 });
 
@@ -14,6 +14,7 @@ const userModel = mongoose.model('users', userSchema);
 
 
 const seedUserData =() => {
+    console.log('hello');
     const newUser = new userModel({ // create new obj
         ownerEmail: 'marahaltarefe18@gmail.com',
         books: [
@@ -31,7 +32,7 @@ const seedUserData =() => {
                 bookName:'Alone Time',
                 description:'​​Four cities, four seasons, and countless tables for one. In this memoir, Stephanie Rosenbloom explores the joys of solo adventuring.',
                 status: 'available'
-            }
+            },
         ]
     })
 
