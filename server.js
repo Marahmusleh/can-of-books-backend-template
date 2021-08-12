@@ -7,14 +7,21 @@ const app = express();
 const jwt = require('jsonwebtoken');
 const jwksClient = require('jwks-rsa'); // we are going to use this package to connect to Auth0
 const mongoose = require('mongoose');
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3001
 const JWKSURI = process.env.JWKSURI;
 const MONGO_DB_URL =process.env.MONGO_DB_URL;
 const {seedUserData} = require('./models/user.model');
-const getBooks = require('./controller/book.controller');
-app.use(cors());
+const {getBooks} = require('./controller/book.controller');
+const {createBook} = require('./controller/book.controller');
+const {deleteBook}= require('./controller/book.controller');
+// const updateBook = require('./controller/book.controller');
+ // it will decode the post body request data
 
-mongoose.connect(`${MONGO_DB_URL}books`, { useNewUrlParser: true, useUnifiedTopology: true });
+
+mongoose.connect(`${MONGO_DB_URL}/books`, { useNewUrlParser: true, useUnifiedTopology: true });
+
+app.use(cors());
+app.use(express.json());
 
 
 const client = jwksClient({
@@ -45,7 +52,9 @@ jwt.verify(token, getKey, {}, (error, user) =>{ // pass it to the auth to check 
 seedUserData();
 
 app.get('/books',getBooks);
-
+app.post('/book',createBook);
+app.delete('/book/:book_id', deleteBook);
+// app.put('/book/:books_id' , updateBook);
 
 
 
