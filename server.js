@@ -14,7 +14,7 @@ const {seedUserData} = require('./models/user.model');
 const {getBooks} = require('./controller/book.controller');
 const {createBook} = require('./controller/book.controller');
 const {deleteBook}= require('./controller/book.controller');
-// const updateBook = require('./controller/book.controller');
+const {updateBook} = require('./controller/book.controller');
  // it will decode the post body request data
 
 
@@ -54,7 +54,7 @@ seedUserData();
 app.get('/books',getBooks);
 app.post('/book',createBook);
 app.delete('/book/:book_id', deleteBook);
-// app.put('/book/:books_id' , updateBook);
+app.put('/book/:book_id' , updateBook);
 
 
 
